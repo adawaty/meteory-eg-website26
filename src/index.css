@@ -1,0 +1,241 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+  Meteory UI system (Johnson Controls-inspired, upgraded)
+  Principles
+  - Clarity first: readable type, strong hierarchy, predictable spacing.
+  - Safety-critical feel: calm corporate neutrals + Meteory Red for decisive actions.
+  - Motion with purpose: guide attention, confirm actions, never distract.
+  - Accessibility: visible focus states, reduced-motion support.
+*/
+
+@theme inline {
+  --font-sans: "IBM Plex Sans", sans-serif;
+  --font-heading: "IBM Plex Sans Condensed", sans-serif;
+  --font-arabic: "Cairo", sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.6rem;
+
+  /* Motion tokens */
+  --motion-fast: 140ms;
+  --motion-med: 220ms;
+  --motion-slow: 420ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Elevation tokens */
+  --shadow-1: 0 1px 0 rgba(2, 6, 23, 0.06), 0 10px 24px -18px rgba(2, 6, 23, 0.28);
+  --shadow-2: 0 1px 0 rgba(2, 6, 23, 0.06), 0 18px 48px -26px rgba(2, 6, 23, 0.34);
+  --shadow-3: 0 1px 0 rgba(2, 6, 23, 0.10), 0 28px 70px -34px rgba(2, 6, 23, 0.45);
+
+  /* Focus ring (stronger) */
+  --focus-ring: 0 0 0 4px color-mix(in oklch, oklch(var(--accent)) 22%, transparent);
+
+  /* Meteory Safety Red (keep) */
+  --primary: oklch(0.55 0.22 27);
+  --primary-foreground: oklch(1 0 0);
+
+  /* Corporate neutrals (cool) */
+  --background: oklch(0.99 0.003 240);
+  --foreground: oklch(0.22 0.02 255);
+
+  --card: oklch(1 0 0);
+  --card-foreground: var(--foreground);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--foreground);
+
+  --secondary: oklch(0.965 0.01 240);
+  --secondary-foreground: var(--foreground);
+
+  --muted: oklch(0.94 0.01 240);
+  --muted-foreground: oklch(0.48 0.02 255);
+
+  /* Accent becomes a corporate blue (Johnson Controls vibe) */
+  --accent: oklch(0.62 0.14 242);
+  --accent-foreground: oklch(1 0 0);
+
+  --destructive: oklch(0.577 0.245 27.325);
+
+  --border: oklch(0.86 0.01 240);
+  --input: oklch(0.86 0.01 240);
+  --ring: var(--primary);
+
+  --sidebar: oklch(0.985 0.003 240);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--foreground);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: var(--secondary);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+.dark {
+  --background: oklch(0.16 0.02 255);
+  --foreground: oklch(0.96 0.01 240);
+
+  --card: oklch(0.2 0.02 255);
+  --card-foreground: var(--foreground);
+
+  --popover: oklch(0.2 0.02 255);
+  --popover-foreground: var(--foreground);
+
+  --secondary: oklch(0.23 0.02 255);
+  --secondary-foreground: var(--foreground);
+
+  --muted: oklch(0.23 0.02 255);
+  --muted-foreground: oklch(0.78 0.01 240);
+
+  --accent: oklch(0.64 0.14 242);
+  --accent-foreground: oklch(1 0 0);
+
+  --border: oklch(0.3 0.02 255);
+  --input: oklch(0.3 0.02 255);
+  --ring: var(--primary);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  a {
+    color: oklch(var(--accent));
+  }
+
+  /* Headings: compact, corporate. No forced uppercase. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading tracking-tight;
+    text-transform: none;
+  }
+
+  /* Arabic font switch */
+  [dir="rtl"] body {
+    font-family: var(--font-arabic);
+  }
+
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3,
+  [dir="rtl"] h4,
+  [dir="rtl"] h5,
+  [dir="rtl"] h6 {
+    font-family: var(--font-arabic);
+    letter-spacing: normal;
+  }
+}
+
+@layer utilities {
+  /* A small, consistent “JCI-ish” label style */
+  .ui-label {
+    @apply text-xs font-semibold tracking-[0.16em] uppercase;
+  }
+
+  /* Thin red underline used for active nav / section headers */
+  .ui-underline-red {
+    background-image: linear-gradient(to right, oklch(var(--primary)), oklch(var(--primary)));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 100% 2px;
+    padding-bottom: 2px;
+  }
+
+  /* Surfaces + elevation */
+  .ui-surface {
+    @apply bg-card border border-border rounded-xl;
+    box-shadow: var(--shadow-1);
+  }
+
+  .ui-hover-lift {
+    transition: transform var(--motion-med) var(--ease-out), box-shadow var(--motion-med) var(--ease-out), border-color var(--motion-med) var(--ease-out);
+    will-change: transform;
+  }
+
+  .ui-hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-2);
+  }
+
+  .ui-focus {
+    outline: none;
+  }
+
+  .ui-focus:focus-visible {
+    box-shadow: var(--focus-ring);
+  }
+
+  /* Subtle animated shine for CTAs (disabled for reduced motion) */
+  @media (prefers-reduced-motion: no-preference) {
+    .ui-shine {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ui-shine::after {
+      content: "";
+      position: absolute;
+      inset: -120% -30% auto -30%;
+      height: 220%;
+      width: 38%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in oklch, white 34%, transparent),
+        transparent
+      );
+      transform: rotate(18deg) translateX(-160%);
+      transition: transform var(--motion-slow) var(--ease-soft);
+      pointer-events: none;
+    }
+
+    .ui-shine:hover::after {
+      transform: rotate(18deg) translateX(380%);
+    }
+  }
+}
